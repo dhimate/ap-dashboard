@@ -2,6 +2,10 @@ package org.dhimate.mule.controller;
 
 import java.util.List;
 
+import org.dhimate.mule.cs.AnypointCoreServicesSubscriptionEntity;
+import org.dhimate.mule.cs.AnypointCoreServicesSubscriptionRepository;
+import org.dhimate.mule.cs.AnypointCoreServicesUsageEntity;
+import org.dhimate.mule.cs.AnypointCoreServicesUsageRepository;
 import org.dhimate.mule.designcenter.AnypointDesignCenterEntity;
 import org.dhimate.mule.designcenter.AnypointDesignCenterRepository;
 import org.dhimate.mule.exchange.AnypointExchangeEntity;
@@ -22,11 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping("/api")
 public class APIController {
-	/*
-	 * @Autowired AnypointOrganizationService aos;
-	 * 
-	 * @Autowired AnypointUserService aus;
-	 */
+	
 
 	@Autowired
 	AnypointOrganizationRepository aorgrepository;
@@ -41,6 +41,11 @@ public class APIController {
 	@Autowired
 	AnypointDesignCenterRepository adcrepository;
 
+	@Autowired
+	AnypointCoreServicesSubscriptionRepository subsrepository;
+	
+	@Autowired
+	AnypointCoreServicesUsageRepository usagerepository;
 
 	@GetMapping("/users")
 	@ResponseBody
@@ -68,6 +73,20 @@ public class APIController {
 	List<AnypointDesignCenterEntity> designCenter() {
 
 		return adcrepository.findAll();
+	}
+	
+	@GetMapping("/subscription")
+	@ResponseBody
+	List<AnypointCoreServicesSubscriptionEntity> subscription() {
+
+		return subsrepository.findAll();
+	}
+	
+	@GetMapping("/usage")
+	@ResponseBody
+	List<AnypointCoreServicesUsageEntity> usage() {
+
+		return usagerepository.findAll();
 	}
 
 }

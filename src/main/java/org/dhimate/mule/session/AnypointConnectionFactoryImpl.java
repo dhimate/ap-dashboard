@@ -22,15 +22,12 @@ public class AnypointConnectionFactoryImpl implements AnypointConnectionFactory 
 	public AnypointConnection getConnection() {
 		long currentMili = System.currentTimeMillis() / 1000;
 		long validTill = ac.getValidFrom() + ac.getValidity();
-		
+
 		if (currentMili > validTill) {
 			log.info("Connection expired. Requesting new token");
 			ac.refreshToken();
 			log.info("Refreshed token " + ac.getAccessToken());
 		}
-		else
-			log.info("Token is valid " + ac.getAccessToken());
-		
 		return this.ac;
 	}
 
