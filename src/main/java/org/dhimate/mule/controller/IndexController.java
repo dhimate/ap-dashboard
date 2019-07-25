@@ -6,17 +6,13 @@ import org.dhimate.mule.designcenter.AnypointDesignCenterEntity;
 import org.dhimate.mule.designcenter.AnypointDesignCenterRepository;
 import org.dhimate.mule.exchange.AnypointExchangeEntity;
 import org.dhimate.mule.exchange.AnypointExchangeRepository;
-import org.dhimate.mule.organization.AnypointOrganizationEntity;
 import org.dhimate.mule.organization.AnypointOrganizationRepository;
-import org.dhimate.mule.session.AnypointConnectionFactory;
 import org.dhimate.mule.user.AnypointUserEntity;
 import org.dhimate.mule.user.AnypointUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,9 +30,6 @@ public class IndexController {
 
 	@Autowired
 	AnypointUserRepository ausrrepository;
-
-	@Autowired
-	AnypointConnectionFactory ac;
 
 	@Autowired
 	AnypointExchangeRepository aexcrepository;

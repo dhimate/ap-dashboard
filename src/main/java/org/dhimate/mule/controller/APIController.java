@@ -8,7 +8,6 @@ import org.dhimate.mule.exchange.AnypointExchangeEntity;
 import org.dhimate.mule.exchange.AnypointExchangeRepository;
 import org.dhimate.mule.organization.AnypointOrganizationEntity;
 import org.dhimate.mule.organization.AnypointOrganizationRepository;
-import org.dhimate.mule.session.AnypointConnectionFactory;
 import org.dhimate.mule.user.AnypointUserEntity;
 import org.dhimate.mule.user.AnypointUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +34,6 @@ public class APIController {
 	@Autowired
 	AnypointUserRepository ausrrepository;
 
-	@Autowired
-	AnypointConnectionFactory ac;
 
 	@Autowired
 	AnypointExchangeRepository aexcrepository;
