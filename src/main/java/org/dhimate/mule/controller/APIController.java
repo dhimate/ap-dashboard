@@ -2,6 +2,8 @@ package org.dhimate.mule.controller;
 
 import java.util.List;
 
+import org.dhimate.mule.cloudhub.AnypointCloudhubEntity;
+import org.dhimate.mule.cloudhub.AnypointCloudhubRepository;
 import org.dhimate.mule.cs.AnypointCoreServicesSubscriptionEntity;
 import org.dhimate.mule.cs.AnypointCoreServicesSubscriptionRepository;
 import org.dhimate.mule.cs.AnypointCoreServicesUsageEntity;
@@ -22,20 +24,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Controller
-@Slf4j
 @RequestMapping("/api")
 public class APIController {
-	
 
 	@Autowired
 	AnypointOrganizationRepository orgrepository;
 
 	@Autowired
 	AnypointUserRepository userrepository;
-
 
 	@Autowired
 	AnypointExchangeRepository exchrepository;
@@ -45,14 +42,16 @@ public class APIController {
 
 	@Autowired
 	AnypointCoreServicesSubscriptionRepository subsrepository;
-	
+
 	@Autowired
 	AnypointCoreServicesUsageRepository usagerepository;
 
 	@Autowired
 	AnypointEnvironmentRepository environmentrepository;
 
-	
+	@Autowired
+	AnypointCloudhubRepository cloudhubrepository;
+
 	@GetMapping("/users")
 	@ResponseBody
 	List<AnypointUserEntity> users() {
@@ -80,21 +79,21 @@ public class APIController {
 
 		return dcrepository.findAll();
 	}
-	
+
 	@GetMapping("/subscription")
 	@ResponseBody
 	List<AnypointCoreServicesSubscriptionEntity> subscription() {
 
 		return subsrepository.findAll();
 	}
-	
+
 	@GetMapping("/usage")
 	@ResponseBody
 	List<AnypointCoreServicesUsageEntity> usage() {
 
 		return usagerepository.findAll();
 	}
-	
+
 	@GetMapping("/environment")
 	@ResponseBody
 	List<AnypointEnvironmentEntity> environment() {
@@ -102,4 +101,9 @@ public class APIController {
 		return environmentrepository.findAll();
 	}
 
+	@GetMapping("/cloudhub")
+	@ResponseBody
+	List<AnypointCloudhubEntity> cloudhub() {
+		return cloudhubrepository.findAll();
+	}
 }

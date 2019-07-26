@@ -17,7 +17,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
-@Component
+@Component("AnypointEnvironmentService")
 @Data
 @Slf4j
 @DependsOn(value = { "AnypointConnectionFactory", "AnypointOrganizationService" })
