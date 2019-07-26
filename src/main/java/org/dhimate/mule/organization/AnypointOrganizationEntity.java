@@ -16,14 +16,16 @@ public class AnypointOrganizationEntity {
 	private long id;
 	private String organizationId;
 	private String organizationName;
+	private int totalSubOrganizations;
 
 	public AnypointOrganizationEntity() {
 
 	}
 
-	public AnypointOrganizationEntity(String organizationId, String organizationName) {
+	public AnypointOrganizationEntity(String organizationId, String organizationName, int totalSubOrganizations) {
 		this.organizationId = organizationId;
 		this.organizationName = organizationName;
+		this.totalSubOrganizations = totalSubOrganizations;
 	}
 
 }

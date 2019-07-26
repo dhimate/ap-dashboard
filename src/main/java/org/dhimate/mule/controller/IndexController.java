@@ -52,6 +52,7 @@ public class IndexController {
 		List<AnypointDesignCenterEntity> designCenter = adcrepository.findAll();
 		model.addAttribute("users", users);
 		model.addAttribute("organizationName", aorgrepository.findAll().get(0).getOrganizationName());
+		model.addAttribute("totalOrganizations",aorgrepository.findAll().get(0).getTotalSubOrganizations());
 		model.addAttribute("exchange", exchange);
 		model.addAttribute("designCenter", designCenter);
 

@@ -36,6 +36,7 @@ public class AnypointOrganizationService {
 	void init() {
 		AnypointOrganizationEntity anypointOrganizationEntity = fetchAnypointOrganization();
 		repository.save(anypointOrganizationEntity);
+		log.info(anypointOrganizationEntity.toString());
 		acf.getConnection().setOrganizationId(anypointOrganizationEntity.getOrganizationId());
 		log.info("Initialized organization");
 	}
@@ -53,6 +54,6 @@ public class AnypointOrganizationService {
 		
 		log.info("Retrieved organization details from Anypoint Platform");
 		
-		return new AnypointOrganizationEntity(apo.getOrganizationId(), apo.getOrganizationName());
+		return new AnypointOrganizationEntity(apo.getOrganizationId(), apo.getOrganizationName(), apo.getTotalSubOrganizations());
 	}
 }
