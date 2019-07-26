@@ -257,28 +257,28 @@
                 <div class="card-body">
                   <h4 class="small font-weight-bold">Production vCores <span class="float-right" th:text="${subscriptionUsage.prodVCore} + '%'">20%</span></h4>
                   <div class="progress mb-4">
-                    <div class="progress-bar bg-danger" role="progressbar" th:style="${'width:' + subscriptionUsage.prodVCore + '%'}" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div th:classappend="${subscriptionUsage.prodVCoreClass}" role="progressbar" th:style="${'width:' + subscriptionUsage.prodVCore + '%'}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
                   <h4 class="small font-weight-bold">Sandbox vCores <span class="float-right" th:text="${subscriptionUsage.sandboxVCore} + '%'">40%</span></h4>
                   <div class="progress mb-4">
-                    <div class="progress-bar bg-warning" role="progressbar" th:style="${'width:' + subscriptionUsage.sandboxVCore + '%'}" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div th:classappend="${subscriptionUsage.sandboxVCoreClass}" role="progressbar" th:style="${'width:' + subscriptionUsage.sandboxVCore + '%'}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
                 
                   <h4 class="small font-weight-bold">Static IPs <span class="float-right" th:text="${subscriptionUsage.staticIp} + '%'">80%</span></h4>
                   <div class="progress mb-4">
-                    <div class="progress-bar bg-info" role="progressbar" th:style="${'width:' + subscriptionUsage.staticIp + '%'}" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div th:classappend="${subscriptionUsage.staticIpClass}" role="progressbar" th:style="${'width:' + subscriptionUsage.staticIp + '%'}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
                   <h4 class="small font-weight-bold">VPCs <span class="float-right" th:text="${subscriptionUsage.vpc} + '%'">Complete!</span></h4>
                   <div class="progress mb-4">
-                    <div class="progress-bar bg-success" role="progressbar" th:style="${'width:' + subscriptionUsage.vpc + '%'}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div th:classappend="${subscriptionUsage.vpcClass}" role="progressbar" th:style="${'width:' + subscriptionUsage.vpc + '%'}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
                   <h4 class="small font-weight-bold">VPNs <span class="float-right" th:text="${subscriptionUsage.vpn} + '%'">Complete!</span></h4>
                   <div class="progress mb-4">
-                    <div class="progress-bar bg-success" role="progressbar" th:style="${'width:' + subscriptionUsage.vpn + '%'}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div th:classappend="${subscriptionUsage.vpnClass}" role="progressbar" th:style="${'width:' + subscriptionUsage.vpn + '%'}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
                   <h4 class="small font-weight-bold">Load Balancers <span class="float-right" th:text="${subscriptionUsage.loadBalancer} + '%'">Complete!</span></h4>
                   <div class="progress mb-4">
-                    <div class="progress-bar bg-success" role="progressbar" th:style="${'width:' + subscriptionUsage.loadBalancer + '%'}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div th:classappend="${subscriptionUsage.loadBalancerClass}" role="progressbar" th:style="${'width:' + subscriptionUsage.loadBalancer + '%'}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
                 </div>
               </div>
@@ -311,7 +311,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Yogesh Dhimate 2019. This dashboard is <i>NOT</i> a MuleSoft product.</span>
+            <span>Copyright &copy;2019. This dashboard is <i>NOT</i> a MuleSoft product.</span>
           </div>
         </div>
       </footer>

@@ -57,11 +57,11 @@ public class IndexController {
 
 		AnypointCoreServicesUsageEntity usage = usagerepository.getOne((long) 1);
 		AnypointCoreServicesSubscriptionEntity subscription = subsrepository.getOne((long) 1);
-		
+
 		SubscriptionUsage subscriptionUsage = new SubscriptionUsage(usage, subscription);
-		
+
 		model.addAttribute("subscriptionUsage", subscriptionUsage);
-		
+
 		log.info(subscriptionUsage.toString());
 
 		return "index";
@@ -70,23 +70,35 @@ public class IndexController {
 	@Data
 	public class SubscriptionUsage {
 		private int prodVCore;
+		private String prodVCoreClass;
 		private int sandboxVCore;
+		private String sandboxVCoreClass;
 		private int designVCore;
 		private int staticIp;
+		private String staticIpClass;
 		private int vpc;
+		private String vpcClass;
 		private int vpn;
+		private String vpnClass;
 		private int loadBalancer;
+		private String loadBalancerClass;
 
 		public SubscriptionUsage(AnypointCoreServicesUsageEntity usage,
 				AnypointCoreServicesSubscriptionEntity subscription) {
 			this.prodVCore = percentage(usage.getProductionVCoresConsumed(),
 					subscription.getVCoresProductionAssigned());
+			this.prodVCoreClass = indicatorClass(this.prodVCore);
 			this.sandboxVCore = percentage(usage.getSandboxVCoresConsumed(), subscription.getVCoresSandboxAssigned());
+			this.sandboxVCoreClass = indicatorClass(this.sandboxVCore);
 			this.designVCore = percentage(usage.getDesignVCoresConsumed(), subscription.getVCoresDesignAssigned());
 			this.staticIp = percentage(usage.getStaticIpsConsumed(), subscription.getStaticIpsAssigned());
+			this.staticIpClass = indicatorClass(this.staticIp);
 			this.vpc = percentage(usage.getVpcsConsumed(), subscription.getVpcsAssigned());
+			this.vpcClass = indicatorClass(this.vpc);
 			this.vpn = percentage(usage.getVpnsConsumed(), subscription.getVpnsAssigned());
+			this.vpnClass = indicatorClass(this.vpn);
 			this.loadBalancer = percentage(usage.getLoadBalancersConsumed(), subscription.getLoadBalancersAssigned());
+			this.loadBalancerClass = indicatorClass(this.loadBalancer);
 
 		}
 
@@ -98,6 +110,23 @@ public class IndexController {
 			}
 
 			return percent;
+
+		}
+
+		public String indicatorClass(int percentage) {
+			String indicatorClass = "";
+
+			if (percentage <= 25) {
+				indicatorClass = "progress-bar bg-danger";
+			} else if (percentage <= 50 && percentage > 25) {
+				indicatorClass = "progress-bar bg-warning";
+			} else if (percentage <= 75 && percentage > 50) {
+				indicatorClass = "progress-bar bg-info";
+			} else {
+				indicatorClass = "progress-bar bg-success";
+			}
+
+			return indicatorClass;
 
 		}
 	}
