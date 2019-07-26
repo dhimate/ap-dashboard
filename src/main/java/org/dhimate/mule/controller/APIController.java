@@ -8,6 +8,8 @@ import org.dhimate.mule.cs.AnypointCoreServicesUsageEntity;
 import org.dhimate.mule.cs.AnypointCoreServicesUsageRepository;
 import org.dhimate.mule.designcenter.AnypointDesignCenterEntity;
 import org.dhimate.mule.designcenter.AnypointDesignCenterRepository;
+import org.dhimate.mule.environment.AnypointEnvironmentEntity;
+import org.dhimate.mule.environment.AnypointEnvironmentRepository;
 import org.dhimate.mule.exchange.AnypointExchangeEntity;
 import org.dhimate.mule.exchange.AnypointExchangeRepository;
 import org.dhimate.mule.organization.AnypointOrganizationEntity;
@@ -29,17 +31,17 @@ public class APIController {
 	
 
 	@Autowired
-	AnypointOrganizationRepository aorgrepository;
+	AnypointOrganizationRepository orgrepository;
 
 	@Autowired
-	AnypointUserRepository ausrrepository;
+	AnypointUserRepository userrepository;
 
 
 	@Autowired
-	AnypointExchangeRepository aexcrepository;
+	AnypointExchangeRepository exchrepository;
 
 	@Autowired
-	AnypointDesignCenterRepository adcrepository;
+	AnypointDesignCenterRepository dcrepository;
 
 	@Autowired
 	AnypointCoreServicesSubscriptionRepository subsrepository;
@@ -47,32 +49,36 @@ public class APIController {
 	@Autowired
 	AnypointCoreServicesUsageRepository usagerepository;
 
+	@Autowired
+	AnypointEnvironmentRepository environmentrepository;
+
+	
 	@GetMapping("/users")
 	@ResponseBody
 	List<AnypointUserEntity> users() {
 
-		return ausrrepository.findAll();
+		return userrepository.findAll();
 	}
 
 	@GetMapping("/organizations")
 	@ResponseBody
 	List<AnypointOrganizationEntity> organizations() {
 
-		return aorgrepository.findAll();
+		return orgrepository.findAll();
 	}
 
 	@GetMapping("/exchange")
 	@ResponseBody
 	List<AnypointExchangeEntity> exchange() {
 
-		return aexcrepository.findAll();
+		return exchrepository.findAll();
 	}
 
 	@GetMapping("/design-center")
 	@ResponseBody
 	List<AnypointDesignCenterEntity> designCenter() {
 
-		return adcrepository.findAll();
+		return dcrepository.findAll();
 	}
 	
 	@GetMapping("/subscription")
@@ -87,6 +93,13 @@ public class APIController {
 	List<AnypointCoreServicesUsageEntity> usage() {
 
 		return usagerepository.findAll();
+	}
+	
+	@GetMapping("/environment")
+	@ResponseBody
+	List<AnypointEnvironmentEntity> environment() {
+
+		return environmentrepository.findAll();
 	}
 
 }
