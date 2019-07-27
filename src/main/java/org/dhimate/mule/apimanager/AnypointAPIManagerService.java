@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.dhimate.mule.environment.AnypointEnvironmentEntity;
 import org.dhimate.mule.environment.AnypointEnvironmentRepository;
 import org.dhimate.mule.session.AnypointConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +41,22 @@ public class AnypointAPIManagerService {
 
 	@PostConstruct
 	void init() {
+		
+		List<AnypointEnvironmentEntity> environmentList = environmentRepository.findAll();
 
-		fetchAnypointAPIManager("Development", "2c7ad64e-f216-44ad-bd17-0ca5a005c8c8");
+		for (AnypointEnvironmentEntity e : environmentList) {
+			AnypointAPIManagerWrapper aame = fetchAnypointAPIManager(e.getName(), e.getEnvironmentId());
+			log.info("WRAPPER" + aame.toString());
+//			if (aame.size() > 0) {
+//				apimanagerrepository.saveAll(aame);
+//			}
+		}
+
+//		fetchAnypointAPIManager("Development", "2c7ad64e-f216-44ad-bd17-0ca5a005c8c8");
 		log.info("Initialized API manager");
 	}
 
-	public List<AnypointAPIManagerEntity> fetchAnypointAPIManager(String environmentName, String environmentId) {
+	public AnypointAPIManagerWrapper fetchAnypointAPIManager(String environmentName, String environmentId) {
 		log.info("Getting api manager " + environmentName + "details from Anypoint Platform");
 
 		WebClient client = WebClient.builder().baseUrl(apiBaseUri)
@@ -57,10 +68,9 @@ public class AnypointAPIManagerService {
 
 		AnypointAPIManagerWrapper aamw = mono.block();
 
-		log.info(aamw.toString());
 
 		log.info("Retrieved api manager " + environmentName + " app details from Anypoint Platform");
 
-		return null;
+		return aamw;
 	}
 }

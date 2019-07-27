@@ -15,7 +15,7 @@ public class AnypointAPIManager {
 	private String apiAssetId;
 	private LocalDateTime apiCreatedDate;
 	private LocalDateTime apiUpdatedDate;
-	private LocalDateTime lastActiveDate;
+	private LocalDateTime apiLastActiveDate;
 	private String apiAssetVersion;
 	private String apiProductVersion;
 	private long apiActiveContractsCount;
