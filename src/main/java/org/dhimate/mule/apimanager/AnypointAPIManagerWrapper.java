@@ -27,22 +27,15 @@ public class AnypointAPIManagerWrapper {
 
 		for (Map<String, Object> asset : assets) {
 
-//			Map<String, Object> audit = (Map<String, Object>) asset.get("audit");
-//			Map<String, Object> created = (Map<String, Object>) audit.get("created");
-//			String createdDate =  (String) created.get("date");
 			String exchangeAssetName = (String) asset.get("exchangeAssetName");
-//			assetId = (String)asset.get("assetId");
-
-//			log.info("CREATED DATE " + createdDate + " EXCHANGE ASSET NAME " + exchangeAssetName + " ASSET NAME " + assetId) ;
 
 			ArrayList<Map<String, Object>> apis = (ArrayList<Map<String, Object>>) asset.get("apis");
 
 			for (Map<String, Object> api : apis) {
 				if (anypointAPIManagerAssets == null) {
 					anypointAPIManagerAssets = new ArrayList<AnypointAPIManager>();
-				} else {
-					anypointAPIManagerAssets.clear();
-				}
+				} 
+				
 				AnypointAPIManager tempAnypointAPIManager = new AnypointAPIManager();
 
 				Map<String, Object> audit = (Map<String, Object>) api.get("audit");
@@ -50,11 +43,14 @@ public class AnypointAPIManagerWrapper {
 				Map<String, Object> updated = (Map<String, Object>) audit.get("updated");
 
 				tempAnypointAPIManager.setExchangeAssetName(exchangeAssetName);
+				
 				tempAnypointAPIManager.setApiCreatedDate(formatDate((String) created.get("date")));
-				tempAnypointAPIManager.setApiUpdatedDate(formatDate((String) updated.get("date")));
+				if (updated.get("date")!= null)
+					tempAnypointAPIManager.setApiUpdatedDate(formatDate((String) updated.get("date")));
 				tempAnypointAPIManager.setApiAutoDiscoveryId(((Number) api.get(("id"))).longValue());
 				tempAnypointAPIManager.setApiAssetId((String) api.get("assetId"));
-				tempAnypointAPIManager.setApiLastActiveDate(formatDate((String) api.get("lastActiveDate")));
+				if(api.get("lastActiveDate")!= null)
+					tempAnypointAPIManager.setApiLastActiveDate(formatDate((String) api.get("lastActiveDate")));
 				tempAnypointAPIManager.setApiAssetVersion((String) api.get("assetVersion"));
 				tempAnypointAPIManager.setApiProductVersion((String) api.get("productVersion"));
 				tempAnypointAPIManager

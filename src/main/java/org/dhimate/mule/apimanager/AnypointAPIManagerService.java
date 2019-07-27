@@ -1,5 +1,6 @@
 package org.dhimate.mule.apimanager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -41,33 +42,66 @@ public class AnypointAPIManagerService {
 
 	@PostConstruct
 	void init() {
-		
+
 		List<AnypointEnvironmentEntity> environmentList = environmentRepository.findAll();
 
-		for (AnypointEnvironmentEntity e : environmentList) {
-			AnypointAPIManagerWrapper aame = fetchAnypointAPIManager(e.getName(), e.getEnvironmentId());
-			log.info("WRAPPER" + aame.toString());
-//			if (aame.size() > 0) {
-//				apimanagerrepository.saveAll(aame);
-//			}
+		for (AnypointEnvironmentEntity e : environmentList) {		
+			
+			int limit = 20;
+			int offset = 0;
+			int currentTotal = 0;
+			int assetsTotal = 0;
+			
+			do {
+				List<AnypointAPIManagerEntity> aame = new ArrayList<AnypointAPIManagerEntity>();
+				AnypointAPIManagerWrapper aamw = fetchAnypointAPIManager(e.getName(), e.getEnvironmentId(), offset, limit);
+				assetsTotal = aamw.getTotal();
+				
+				if (assetsTotal > 0) {
+					currentTotal = currentTotal + aamw.getAnypointAPIManagerAssets().size();
+					
+					for (AnypointAPIManager i : aamw.getAnypointAPIManagerAssets()) {
+	
+						AnypointAPIManagerEntity temp = new AnypointAPIManagerEntity();
+						temp.setOrganizationId(acf.getConnection().getOrganizationId());
+						temp.setEnvironmentId(e.getEnvironmentId());
+						temp.setEnvironmentName(e.getName());
+						temp.setExchangeAssetName(i.getExchangeAssetName());
+						temp.setApiAutoDiscoveryId(i.getApiAutoDiscoveryId());
+						temp.setApiAssetId(i.getApiAssetId());
+						temp.setApiCreatedDate(i.getApiCreatedDate());
+						temp.setApiUpdatedDate(i.getApiUpdatedDate());
+						temp.setApiLastActiveDate(i.getApiLastActiveDate());
+						temp.setApiAssetVersion(i.getApiAssetVersion());
+						temp.setApiProductVersion(i.getApiProductVersion());
+						temp.setApiActiveContractsCount(i.getApiActiveContractsCount());
+						aame.add(temp);
+					}
+	
+					if (aame.size() > 0) {
+						apimanagerrepository.saveAll(aame);
+					}
+					offset = offset + limit;
+				}
+			log.info("API Manager " + e.getName() + " Total Assets " + assetsTotal + " Offset " + offset);
+			} while(currentTotal < assetsTotal);
 		}
 
-//		fetchAnypointAPIManager("Development", "2c7ad64e-f216-44ad-bd17-0ca5a005c8c8");
 		log.info("Initialized API manager");
 	}
 
-	public AnypointAPIManagerWrapper fetchAnypointAPIManager(String environmentName, String environmentId) {
+	public AnypointAPIManagerWrapper fetchAnypointAPIManager(String environmentName, String environmentId, int offset, int limit) {
 		log.info("Getting api manager " + environmentName + "details from Anypoint Platform");
 
 		WebClient client = WebClient.builder().baseUrl(apiBaseUri)
 				.defaultHeader("Authorization", "Bearer " + acf.getConnection().getAccessToken()).build();
 
-		Mono<AnypointAPIManagerWrapper> mono = client.get().uri("/apimanager/api/v1/organizations/"
-				+ acf.getConnection().getOrganizationId() + "/environments/" + environmentId + "/apis?limit=1").retrieve()
-				.bodyToMono(AnypointAPIManagerWrapper.class);
+		Mono<AnypointAPIManagerWrapper> mono = client
+				.get().uri("/apimanager/api/v1/organizations/" + acf.getConnection().getOrganizationId()
+						+ "/environments/" + environmentId + "/apis?offset=" + offset + "&limit=" + limit)
+				.retrieve().bodyToMono(AnypointAPIManagerWrapper.class);
 
 		AnypointAPIManagerWrapper aamw = mono.block();
-
 
 		log.info("Retrieved api manager " + environmentName + " app details from Anypoint Platform");
 

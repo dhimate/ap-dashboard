@@ -46,6 +46,7 @@ public class AnypointEnvironmentService {
 			apeDB.setType(ape.getType());
 			repository.save(apeDB);
 		}
+		log.info(anypointEnvironment.toString());
 		log.info("Initialised environment");
 	}
 
