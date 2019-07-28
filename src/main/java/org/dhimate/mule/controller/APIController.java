@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.dhimate.mule.apimanager.AnypointAPIManagerEntity;
 import org.dhimate.mule.apimanager.AnypointAPIManagerRepository;
+import org.dhimate.mule.clientapplication.AnypointClientApplicationEntity;
+import org.dhimate.mule.clientapplication.AnypointClientApplicationRepository;
 import org.dhimate.mule.cloudhub.AnypointCloudhubEntity;
 import org.dhimate.mule.cloudhub.AnypointCloudhubRepository;
 import org.dhimate.mule.cs.AnypointCoreServicesSubscriptionEntity;
@@ -56,6 +58,9 @@ public class APIController {
 	
 	@Autowired
 	AnypointAPIManagerRepository apimanagerrepository;
+	
+	@Autowired
+	AnypointClientApplicationRepository clientapplicationrepository;
 
 	@GetMapping("/users")
 	@ResponseBody
@@ -116,5 +121,11 @@ public class APIController {
 	@ResponseBody
 	List<AnypointAPIManagerEntity> apimanager() {
 		return apimanagerrepository.findAll();
+	}
+	
+	@GetMapping("/clientapplication")
+	@ResponseBody
+	List<AnypointClientApplicationEntity> clientapplication() {
+		return clientapplicationrepository.findAll();
 	}
 }
