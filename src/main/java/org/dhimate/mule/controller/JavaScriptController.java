@@ -36,9 +36,6 @@ public class JavaScriptController {
 		model.addAttribute("exchangeAssetsByUser", users.toArray());
 		model.addAttribute("exchangeAssetsCount", count.toArray());
 
-		log.info("Exchange Assets by User " + users.toArray());
-		log.info("Exchange Assets Count " + count.toArray());
-		
 		return "js/chart-bar-demo.js";
 	}
 }

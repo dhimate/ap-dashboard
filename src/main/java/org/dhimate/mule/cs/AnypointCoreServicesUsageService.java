@@ -28,7 +28,7 @@ public class AnypointCoreServicesUsageService {
 
 	@Autowired
 	AnypointConnectionFactory acf;
-	
+
 	@Autowired
 	AnypointCoreServicesUsageRepository repository;
 
@@ -45,13 +45,16 @@ public class AnypointCoreServicesUsageService {
 		 * offset); } while (size == limit);
 		 * 
 		 */
+		log.info("Initializing core services usage");
+
 		repository.save(fetchAnypointCoreServicesUsage());
+
 		log.info("Initialized core services usage");
 	}
 
 	public AnypointCoreServicesUsageEntity fetchAnypointCoreServicesUsage() {
 
-		log.info("Getting anypoint coreservices details from Anypoint Platform");
+		log.debug("Getting anypoint coreservices details from Anypoint Platform");
 
 		WebClient client = WebClient.builder().baseUrl(apiBaseUri)
 				.defaultHeader("Authorization", "Bearer " + acf.getConnection().getAccessToken()).build();
@@ -62,9 +65,9 @@ public class AnypointCoreServicesUsageService {
 
 		AnypointCoreServicesUsage acsu = mono.block();
 
-		log.info("Retrieved anypoint core services usage details from Anypoint Platform");
+		log.debug("Retrieved anypoint core services usage details from Anypoint Platform");
 
-		log.info(acsu.toString());
+		// log.info(acsu.toString());
 
 		AnypointCoreServicesUsageEntity entity = new AnypointCoreServicesUsageEntity();
 

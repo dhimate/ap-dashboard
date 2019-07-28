@@ -63,7 +63,7 @@ public class IndexController {
 
 		model.addAttribute("subscriptionUsage", subscriptionUsage);
 
-		log.info(subscriptionUsage.toString());
+//		log.info(subscriptionUsage.toString());
 
 		return "index";
 	}

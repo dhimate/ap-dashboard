@@ -39,6 +39,8 @@ public class AnypointExchangeService {
 
 	@PostConstruct
 	void init() {
+		log.info("Initializing exchange");
+
 		int limit = 20;
 		int offset = 0;
 		int size = 0;
@@ -48,7 +50,6 @@ public class AnypointExchangeService {
 			repository.saveAll(anypointExchangeEntity);
 			size = anypointExchangeEntity.size();
 			offset = offset + limit;
-			log.info("offset " + offset);
 		} while (size == limit);
 		
 		log.info("Initialized exchange");
@@ -56,7 +57,7 @@ public class AnypointExchangeService {
 
 	public List<AnypointExchangeEntity> fetchAnypointExchange(int offset, int limit) {
 
-		log.info("Getting exchange details from Anypoint Platform");
+		log.debug("Getting exchange details from Anypoint Platform");
 
 		WebClient client = WebClient.builder().baseUrl(apiBaseUri)
 				.defaultHeader("Authorization", "Bearer " + acf.getConnection().getAccessToken()).build();
@@ -68,7 +69,7 @@ public class AnypointExchangeService {
 
 		List<AnypointExchange> ape = (List<AnypointExchange>) mono.block();
 
-		log.info("Retrieved exchange details from Anypoint Platform");
+		log.debug("Retrieved exchange details from Anypoint Platform");
 
 		List<AnypointExchangeEntity> exchange = new ArrayList<AnypointExchangeEntity>();
 

@@ -15,6 +15,7 @@ public class AnypointUserEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	private String organizationId;
 	private String userName;
 	private String firstName;
 	private String lastName;

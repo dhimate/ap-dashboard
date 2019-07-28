@@ -30,12 +30,14 @@ public class AnypointEnvironmentService {
 
 	@Autowired
 	AnypointEnvironmentRepository repository;
-	
+
 	@Value("${api.baseuri}")
 	public String apiBaseUri;
 
 	@PostConstruct
 	void init() {
+		log.info("Initializing environment");
+
 		List<AnypointEnvironment> anypointEnvironment = fetchAnypointEnvironment();
 
 		for (AnypointEnvironment ape : anypointEnvironment) {
@@ -47,12 +49,12 @@ public class AnypointEnvironmentService {
 			repository.save(apeDB);
 		}
 		log.info(anypointEnvironment.toString());
-		log.info("Initialised environment");
+		log.info("Initialized environment");
 	}
 
 	public List<AnypointEnvironment> fetchAnypointEnvironment() {
 
-		log.info("Getting environment details from Anypoint Platform");
+		log.debug("Getting environment details from Anypoint Platform");
 		WebClient client = WebClient.builder().baseUrl(apiBaseUri)
 				.defaultHeader("Authorization", "Bearer " + acf.getConnection().getAccessToken()).build();
 
@@ -62,7 +64,7 @@ public class AnypointEnvironmentService {
 
 		AnypointEnvironmentWrapper aew = mono.block();
 
-		log.info("Retrieved environment details from Anypoint Platform");
+		log.debug("Retrieved environment details from Anypoint Platform");
 		return aew.getAnypointEnvironment();
 
 	}

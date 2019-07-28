@@ -28,7 +28,7 @@ public class AnypointCoreServicesSubscriptionService {
 
 	@Autowired
 	AnypointConnectionFactory acf;
-	
+
 	@Autowired
 	AnypointCoreServicesSubscriptionRepository repository;
 
@@ -45,14 +45,16 @@ public class AnypointCoreServicesSubscriptionService {
 		 * offset); } while (size == limit);
 		 * 
 		 */
-		
+		log.info("Initializing core services");
+
 		repository.save(fetchAnypointCoreServicesEntitlements());
+
 		log.info("Initialized core services");
 	}
 
 	public AnypointCoreServicesSubscriptionEntity fetchAnypointCoreServicesEntitlements() {
 
-		log.info("Getting anypoint coreservices details from Anypoint Platform");
+		log.debug("Getting anypoint coreservices details from Anypoint Platform");
 
 		WebClient client = WebClient.builder().baseUrl(apiBaseUri)
 				.defaultHeader("Authorization", "Bearer " + acf.getConnection().getAccessToken()).build();
@@ -62,38 +64,33 @@ public class AnypointCoreServicesSubscriptionService {
 
 		AnypointCoreServicesSubscription acs = mono.block();
 
-		log.info("Retrieved anypoint core services details from Anypoint Platform");
+		log.debug("Retrieved anypoint core services details from Anypoint Platform");
 
-		log.info(acs.toString());
+//		log.info(acs.toString());
 
 		AnypointCoreServicesSubscriptionEntity entity = new AnypointCoreServicesSubscriptionEntity();
-		
-		
+
 		entity.setVCoresProductionAssigned(acs.getVCoresProductionAssigned());
 		entity.setVCoresProductionReassigned(acs.getVCoresProductionReassigned());
-		
+
 		entity.setVCoresSandboxAssigned(acs.getVCoresSandboxAssigned());
 		entity.setVCoresSandboxReassigned(acs.getVCoresSandboxReassigned());
-		
+
 		entity.setVCoresDesignAssigned(acs.getVCoresDesignAssigned());
 		entity.setVCoresDesignReassigned(acs.getVCoresDesignReassigned());
-		
+
 		entity.setStaticIpsAssigned(acs.getStaticIpsAssigned());
 		entity.setStaticIpsReassigned(acs.getStaticIpsReassigned());
-		
+
 		entity.setVpcsAssigned(acs.getVpcsAssigned());
 		entity.setVpcsReassigned(acs.getVpcsReassigned());
-		
+
 		entity.setVpnsAssigned(acs.getVpnsAssigned());
 		entity.setVpnsReassigned(acs.getVpnsReassigned());
-		
-		
+
 		entity.setLoadBalancersAssigned(acs.getLoadBalancersAssigned());
 		entity.setLoadBalancersReassigned(acs.getLoadBalancersReassigned());
-		
-		
-		
-		
+
 		return entity;
 
 	}

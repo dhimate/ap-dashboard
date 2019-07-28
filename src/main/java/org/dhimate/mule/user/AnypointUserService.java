@@ -35,36 +35,50 @@ public class AnypointUserService {
 
 	@PostConstruct
 	void init() {
-		List<AnypointUser> anypointUser = fetchAnypointUser();
+		log.info("Initializing user");
 
-		for (AnypointUser apu : anypointUser) {
-			AnypointUserEntity apuDB = new AnypointUserEntity();
-			apuDB.setFirstName(apu.getFirstName());
-			apuDB.setLastName(apu.getLastName());
-			apuDB.setUserName(apu.getUserName());
-			apuDB.setLastLogin(apu.getLastLogin());
-			apuDB.setEnabled(apu.isEnabled());
-			repository.save(apuDB);
-		}
-		log.info("Initialised user");
+		int limit = 20;
+		int offset = 0;
+		int currentTotal = 0;
+		int usersTotal = 0;
+
+		do {
+			AnypointUserWrapper anypointUserWrapper = fetchAnypointUser(offset, limit);
+			usersTotal = anypointUserWrapper.getTotal();
+			if (usersTotal > 0) {
+				currentTotal = currentTotal + anypointUserWrapper.getAnypointUser().size();
+				for (AnypointUser apu : anypointUserWrapper.getAnypointUser()) {
+					AnypointUserEntity apuDB = new AnypointUserEntity();
+					apuDB.setOrganizationId(acf.getConnection().getOrganizationId());
+					apuDB.setFirstName(apu.getFirstName());
+					apuDB.setLastName(apu.getLastName());
+					apuDB.setUserName(apu.getUserName());
+					apuDB.setLastLogin(apu.getLastLogin());
+					apuDB.setEnabled(apu.isEnabled());
+					repository.save(apuDB);
+				}
+
+				offset = offset + limit;
+			}
+		} while (currentTotal < usersTotal);
+		log.info("Initialized user");
 	}
 
-	public List<AnypointUser> fetchAnypointUser() {
+	public AnypointUserWrapper fetchAnypointUser(int offset, int limit) {
 
-		log.info("Getting user details from Anypoint Platform");
+		log.debug("Getting user details from Anypoint Platform");
 		WebClient client = WebClient.builder().baseUrl(apiBaseUri)
 				.defaultHeader("Authorization", "Bearer " + acf.getConnection().getAccessToken()).build();
 
-		Mono<AnypointUserWrapper> mono = client.get()
-				.uri("/accounts/api/organizations/" + acf.getConnection().getOrganizationId() + "/members").retrieve()
+		Mono<AnypointUserWrapper> mono = client.get().uri("/accounts/api/organizations/"
+				+ acf.getConnection().getOrganizationId() + "/members?offset=" + offset + "&limit=" + limit).retrieve()
 				.bodyToMono(AnypointUserWrapper.class);
 
 		AnypointUserWrapper apw = mono.block();
 
-		log.info("Retrieved user details from Anypoint Platform");
-		return apw.getAnypointUser();
+		log.debug("Retrieved user details from Anypoint Platform");
+		return apw;
 
 	}
 
-	
 }

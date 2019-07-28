@@ -42,6 +42,7 @@ public class AnypointCloudhubService {
 
 	@PostConstruct
 	void init() {
+		log.info("Initializing cloudhub");
 
 		List<AnypointEnvironmentEntity> environmentList = environmentRepository.findAll();
 
@@ -58,7 +59,7 @@ public class AnypointCloudhubService {
 
 	public List<AnypointCloudhubEntity> fetchAnypointCloudhub(String environmentName, String environmentId) {
 
-		log.info("Getting cloudhub " + environmentName + " app details from Anypoint Platform");
+		log.debug("Getting cloudhub " + environmentName + " app details from Anypoint Platform");
 
 		WebClient client = WebClient.builder().baseUrl(apiBaseUri)
 				.defaultHeader("Authorization", "Bearer " + acf.getConnection().getAccessToken()).build();
@@ -68,14 +69,14 @@ public class AnypointCloudhubService {
 
 		List<AnypointCloudhub> apc = (List<AnypointCloudhub>) mono.block();
 
-		log.info("Retrieved cloudhub " + environmentName + " app details from Anypoint Platform");
+		log.debug("Retrieved cloudhub " + environmentName + " app details from Anypoint Platform");
 
 		List<AnypointCloudhubEntity> chel = new ArrayList<AnypointCloudhubEntity>();
 
 		for (AnypointCloudhub i : apc) {
 
 			AnypointCloudhubEntity tempCHEntity = new AnypointCloudhubEntity();
-			
+
 			tempCHEntity.setOrganizationId(acf.getConnection().getOrganizationId());
 			tempCHEntity.setEnvironmentId(environmentId);
 			tempCHEntity.setEnvironmentName(environmentName);
@@ -86,7 +87,7 @@ public class AnypointCloudhubService {
 			tempCHEntity.setNumWorkers(i.getNumWorkers());
 			tempCHEntity.setTotalWorkersWeight(i.getTotalWorkersWeight());
 			tempCHEntity.setRuntimeVersion(i.getRuntimeVersion());
-			
+
 			chel.add(tempCHEntity);
 		}
 

@@ -28,32 +28,36 @@ public class AnypointOrganizationService {
 
 	@Autowired
 	AnypointOrganizationRepository repository;
-	
+
 	@Value("${api.baseuri}")
 	public String apiBaseUri;
 
 	@PostConstruct
 	void init() {
+		log.info("Initializing organization");
+
 		AnypointOrganizationEntity anypointOrganizationEntity = fetchAnypointOrganization();
 		repository.save(anypointOrganizationEntity);
 		log.info(anypointOrganizationEntity.toString());
 		acf.getConnection().setOrganizationId(anypointOrganizationEntity.getOrganizationId());
+		
 		log.info("Initialized organization");
 	}
 
 	public AnypointOrganizationEntity fetchAnypointOrganization() {
 
-		log.info("Getting organization details from Anypoint Platform");
-		
+		log.debug("Getting organization details from Anypoint Platform");
+
 		WebClient client = WebClient.builder().baseUrl(apiBaseUri)
 				.defaultHeader("Authorization", "Bearer " + acf.getConnection().getAccessToken()).build();
 
 		Mono<AnypointOrganization> mono = client.get().uri("/accounts/api/profile").retrieve()
 				.bodyToMono(AnypointOrganization.class);
 		AnypointOrganization apo = mono.block();
-		
-		log.info("Retrieved organization details from Anypoint Platform");
-		
-		return new AnypointOrganizationEntity(apo.getOrganizationId(), apo.getOrganizationName(), apo.getTotalSubOrganizations());
+
+		log.debug("Retrieved organization details from Anypoint Platform");
+
+		return new AnypointOrganizationEntity(apo.getOrganizationId(), apo.getOrganizationName(),
+				apo.getTotalSubOrganizations());
 	}
 }

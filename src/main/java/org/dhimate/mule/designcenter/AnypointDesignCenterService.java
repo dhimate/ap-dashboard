@@ -41,6 +41,8 @@ public class AnypointDesignCenterService {
 	@PostConstruct
 	void init() {
 
+		log.info("Initializing design center");
+
 		List<AnypointDesignCenterEntity> anypointDesignCenterEntity = fetchAnypointDesignCenter();
 		repository.saveAll(anypointDesignCenterEntity);
 
@@ -49,17 +51,18 @@ public class AnypointDesignCenterService {
 
 	public List<AnypointDesignCenterEntity> fetchAnypointDesignCenter() {
 
-		log.info("Getting design center details from Anypoint Platform");
+		log.debug("Getting design center details from Anypoint Platform");
 
 		WebClient client = WebClient.builder().baseUrl(apiBaseUri)
 				.defaultHeader("Authorization", "Bearer " + acf.getConnection().getAccessToken()).build();
 
-		Mono<List<AnypointDesignCenter>> mono = client.get().uri("/designcenter/api-designer/projects").header("x-organization-id", acf.getConnection().getOrganizationId()).retrieve()
+		Mono<List<AnypointDesignCenter>> mono = client.get().uri("/designcenter/api-designer/projects")
+				.header("x-organization-id", acf.getConnection().getOrganizationId()).retrieve()
 				.bodyToFlux(AnypointDesignCenter.class).collectList();
 
 		List<AnypointDesignCenter> adc = (List<AnypointDesignCenter>) mono.block();
 
-		log.info("Retrieved design center details from Anypoint Platform");
+		log.debug("Retrieved design center details from Anypoint Platform");
 
 		List<AnypointDesignCenterEntity> dc = new ArrayList<AnypointDesignCenterEntity>();
 
