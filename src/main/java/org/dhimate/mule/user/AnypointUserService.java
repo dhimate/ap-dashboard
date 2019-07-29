@@ -1,7 +1,5 @@
 package org.dhimate.mule.user;
 
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 
 import org.dhimate.mule.session.AnypointConnectionFactory;
