@@ -68,7 +68,8 @@ public class AnypointAPIManagerService {
 						temp.setOrganizationId(acf.getConnection().getOrganizationId());
 						temp.setEnvironmentId(e.getEnvironmentId());
 						temp.setEnvironmentName(e.getName());
-						temp.setExchangeAssetName(i.getExchangeAssetName());
+                        temp.setExchangeAssetName(i.getExchangeAssetName());
+                        temp.setApiId(i.getApiId());
 						temp.setApiAutoDiscoveryId(i.getApiAutoDiscoveryId());
 						temp.setApiAssetId(i.getApiAssetId());
 						temp.setApiCreatedDate(i.getApiCreatedDate());

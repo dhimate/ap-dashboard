@@ -19,7 +19,6 @@ import lombok.Data;
 public class AnypointAPIManagerWrapper {
 	private int total;
 	private List<AnypointAPIManager> anypointAPIManagerAssets;
-	private String assetId;
 
 	@JsonProperty("assets")
 	@SuppressWarnings("unchecked")
@@ -27,7 +26,9 @@ public class AnypointAPIManagerWrapper {
 
 		for (Map<String, Object> asset : assets) {
 
-			String exchangeAssetName = (String) asset.get("exchangeAssetName");
+            String exchangeAssetName = (String) asset.get("exchangeAssetName");
+            long apiId = ((Number) asset.get("id")).longValue();
+
 
 			ArrayList<Map<String, Object>> apis = (ArrayList<Map<String, Object>>) asset.get("apis");
 
@@ -42,7 +43,9 @@ public class AnypointAPIManagerWrapper {
 				Map<String, Object> created = (Map<String, Object>) audit.get("created");
 				Map<String, Object> updated = (Map<String, Object>) audit.get("updated");
 
-				tempAnypointAPIManager.setExchangeAssetName(exchangeAssetName);
+                tempAnypointAPIManager.setExchangeAssetName(exchangeAssetName);
+                tempAnypointAPIManager.setApiId(apiId);
+
 				
 				tempAnypointAPIManager.setApiCreatedDate(formatDate((String) created.get("date")));
 				if (updated.get("date")!= null)

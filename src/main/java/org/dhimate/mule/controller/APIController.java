@@ -2,6 +2,10 @@ package org.dhimate.mule.controller;
 
 import java.util.List;
 
+import org.dhimate.mule.apianalytics.AnypointAPIAnalyticsAPIIdEntity;
+import org.dhimate.mule.apianalytics.AnypointAPIAnalyticsAPIIdRepository;
+import org.dhimate.mule.apianalytics.AnypointAPIAnalyticsClientIdEntity;
+import org.dhimate.mule.apianalytics.AnypointAPIAnalyticsClientIdRepository;
 import org.dhimate.mule.apimanager.AnypointAPIManagerEntity;
 import org.dhimate.mule.apimanager.AnypointAPIManagerRepository;
 import org.dhimate.mule.clientapplication.AnypointClientApplicationEntity;
@@ -60,7 +64,13 @@ public class APIController {
 	AnypointAPIManagerRepository apimanagerrepository;
 	
 	@Autowired
-	AnypointClientApplicationRepository clientapplicationrepository;
+    AnypointClientApplicationRepository clientapplicationrepository;
+    
+    @Autowired
+    AnypointAPIAnalyticsAPIIdRepository apiidanalyticsrepository;
+
+    @Autowired
+    AnypointAPIAnalyticsClientIdRepository clientidanalyticsrepository;
 
 	@GetMapping("/users")
 	@ResponseBody
@@ -127,5 +137,18 @@ public class APIController {
 	@ResponseBody
 	List<AnypointClientApplicationEntity> clientapplication() {
 		return clientapplicationrepository.findAll();
-	}
+        //return clientapplicationrepository.findByClientApplicationId("67fe6a0c9ced48849561060a65e64275");
+    }
+    
+    @GetMapping("/apiidanalytics")
+    @ResponseBody
+    List<AnypointAPIAnalyticsAPIIdEntity> apianalyticsapiid(){
+        return apiidanalyticsrepository.findAll();
+    }
+
+    @GetMapping("/clientidanalytics")
+    @ResponseBody
+    List<AnypointAPIAnalyticsClientIdEntity> apianalyticsclientid(){
+        return clientidanalyticsrepository.findAll();
+    }
 }

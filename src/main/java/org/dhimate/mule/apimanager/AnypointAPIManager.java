@@ -11,6 +11,7 @@ import lombok.Data;
 public class AnypointAPIManager {
 
 	private String exchangeAssetName;
+	private long apiId;
 	private long apiAutoDiscoveryId;
 	private String apiAssetId;
 	private LocalDateTime apiCreatedDate;

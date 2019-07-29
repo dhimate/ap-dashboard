@@ -19,7 +19,8 @@ public class AnypointAPIManagerEntity {
 	private String organizationId;
 	private String environmentId;
 	private String environmentName;
-	private String exchangeAssetName;
+    private String exchangeAssetName;
+    private long apiId;
 	private long apiAutoDiscoveryId;
 	private String apiAssetId;
 	private LocalDateTime apiCreatedDate;
