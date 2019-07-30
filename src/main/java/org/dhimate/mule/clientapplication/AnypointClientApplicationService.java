@@ -58,8 +58,9 @@ public class AnypointClientApplicationService {
 			temp.setClientApplicationId(tempAnypointClientApplication.getClientApplicationId());
 			temp.setClientApplicationName(tempAnypointClientApplication.getClientApplicationName());
 			clientapplicationrepository.save(temp);
-		}
+        }
 
+        log.info("Initialized api client application");
 	}
 
 	public AnypointClientApplicationWrapper fetchAnypointClientApplication(String environmentName,

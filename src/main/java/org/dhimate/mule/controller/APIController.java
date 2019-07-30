@@ -1,6 +1,8 @@
 package org.dhimate.mule.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.dhimate.mule.apianalytics.AnypointAPIAnalyticsAPIIdEntity;
 import org.dhimate.mule.apianalytics.AnypointAPIAnalyticsAPIIdRepository;
@@ -29,11 +31,16 @@ import org.dhimate.mule.user.AnypointUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/api")
+@Slf4j
 public class APIController {
 
 	@Autowired
@@ -146,9 +153,27 @@ public class APIController {
         return apiidanalyticsrepository.findAll();
     }
 
+    @GetMapping("/apiidanalytics/{environment}")
+    @ResponseBody
+    List<AnypointAPIAnalyticsAPIIdEntity> apianalyticsapiidbyenvironment(@PathVariable("environment") String environment) {
+        log.info("Total records in repository API ID " + apiidanalyticsrepository.count());
+        List<AnypointAPIAnalyticsAPIIdEntity> i= apiidanalyticsrepository.findAll(); 
+        log.info("Total records fetched " + i.size());
+        return i.stream().filter(p->p.getEnvironmentName().equals(environment)).collect(Collectors.toList());
+    }
+
     @GetMapping("/clientidanalytics")
     @ResponseBody
     List<AnypointAPIAnalyticsClientIdEntity> apianalyticsclientid(){
         return clientidanalyticsrepository.findAll();
+    }
+
+    @GetMapping("/clientidanalytics/{environment}")
+    @ResponseBody
+    List<AnypointAPIAnalyticsClientIdEntity> apianalyticsclientidbyenvironment(@PathVariable("environment") String environment) {
+        log.info("Total records in repository API ID " + clientidanalyticsrepository.count());
+        List<AnypointAPIAnalyticsClientIdEntity> i= clientidanalyticsrepository.findAll(); 
+        log.info("Total records fetched " + i.size());
+        return i.stream().filter(p->p.getEnvironmentName().equals(environment)).collect(Collectors.toList());
     }
 }

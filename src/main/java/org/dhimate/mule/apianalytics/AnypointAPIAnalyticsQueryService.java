@@ -112,7 +112,10 @@ public class AnypointAPIAnalyticsQueryService {
         WebClient client = WebClient
                             .builder()
                             .baseUrl(apiBaseUri)
-                            .defaultHeader("Authorization", "Bearer " + acf.getConnection().getAccessToken()).build();
+                            .defaultHeader("Authorization", "Bearer " + acf.getConnection().getAccessToken())
+                            .defaultHeader("Accept", "application/json")
+                            .defaultHeader("Content-Type", "application/json")
+                            .build();
 
         /*
          * Mono<AnypointClientApplicationWrapper> mono = client
@@ -130,7 +133,7 @@ public class AnypointAPIAnalyticsQueryService {
                                                 .block();
         // AnypointAPIAnalyticsQueryResponse acaw = mono.block();
 
-        log.info(aaaq.toString());
+//        log.info(aaaq.toString());
 
         log.debug("Retrieved api client application " + environmentName + " app details from Anypoint Platform");
 
