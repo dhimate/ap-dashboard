@@ -45,27 +45,30 @@
           <span>Dashboard</span></a>
       </li>
 
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
+      <!-- Divider 
+      <hr class="sidebar-divider d-none d-md-block">-->
 
-      <!-- Heading -->
+      <!-- Heading 
       <div class="sidebar-heading">
         Addons
       </div>
+    -->
 
-      <!-- Nav Item - Tables -->
+      <!-- Nav Item - 
       <li class="nav-item">
         <a class="nav-link" href="designCenter">
           <i class="fas fa-fw fa-table"></i>
           <span>Design Center</span></a>
       </li>
+    -->
 
-      <!-- Nav Item - Tables -->
+      <!-- Nav Item - Tables 
       <li class="nav-item">
         <a class="nav-link" href="exchange">
           <i class="fas fa-fw fa-table"></i>
           <span>Exchange</span></a>
       </li>   
+    -->
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -114,14 +117,14 @@
               </div>
             </li>
 
-            <div class="topbar-divider d-none d-sm-block"></div>
+<!--            <div class="topbar-divider d-none d-sm-block"></div>-->
 
-            <!-- Nav Item - User Information -->
+            <!-- Nav Item - User Information 
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Administration</span>
-                <!-- <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60"> -->
-                <i class="fas fa-tools fa-sm fa-fw mr-2 text-gray-400"></i>
+             <!--   <span class="mr-2 d-none d-lg-inline text-gray-600 small">Administration</span>-->
+                <!-- <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60"> 
+                <i class="fas fa-tools fa-sm fa-fw mr-2 text-gray-400"></i>-->
                
               </a>
               <!-- Dropdown - User Information -->
@@ -157,7 +160,7 @@
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800" th:text="${organizationName}"></h1>
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Refresh</a>
+            <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Refresh</a>-->
           </div>
 
           <!-- Content Row -->
@@ -243,6 +246,52 @@
 
           <!-- Content Row -->
 
+                   <!-- Content Row -->
+                   <div class="row">
+
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                      <div class="card bg-secondary text-white shadow">
+                        <div class="card-body"> 
+                            <div class ="h5 mb-0 font-weight-bold" th:text="${totalAPIs}">2</div> 
+                              <div class="text-white-50 small text-uppercase">APIs</div>
+                        </div>
+                      </div>
+                    </div>
+        
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card bg-info text-white shadow">
+                            <div class="card-body"> 
+                                <div class ="h5 mb-0 font-weight-bold" th:text="${totalApplications}">2</div> 
+                                <div class="text-white-50 small text-uppercase">Applications</div>
+                            </div>
+                        </div>
+                    </div> 
+        
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card bg-primary text-white shadow">
+                            <div class="card-body"> 
+                                <div class ="h5 mb-0 font-weight-bold" th:text="${totalAPITransactions}">2</div> 
+                                <div class="text-white-50 small text-uppercase">API Transactions Last Month</div>
+                            </div>
+                        </div>
+                    </div> 
+        
+                    <!-- Pending Requests Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card bg-success text-white shadow">
+                            <div class="card-body"> 
+                                <div class ="h5 mb-0 font-weight-bold" th:text="${totalAPIConsumers}">2</div> 
+                                <div class="text-white-50 small text-uppercase">API Consumers</div>
+                            </div>
+                        </div>
+                    </div> 
+                  </div>
+        
+                  <!-- Content Row -->
+
           <!-- Content Row -->
           <div class="row">
 
@@ -264,11 +313,11 @@
                     <div th:classappend="${subscriptionUsage.sandboxVCoreClass}" role="progressbar" th:style="${'width:' + subscriptionUsage.sandboxVCore + '%'}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
                 
-                  <h4 class="small font-weight-bold">Static IPs <span class="float-right" th:text="${subscriptionUsage.staticIp} + '%'">80%</span></h4>
+            <!--      <h4 class="small font-weight-bold">Static IPs <span class="float-right" th:text="${subscriptionUsage.staticIp} + '%'">80%</span></h4>
                   <div class="progress mb-4">
                     <div th:classappend="${subscriptionUsage.staticIpClass}" role="progressbar" th:style="${'width:' + subscriptionUsage.staticIp + '%'}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
-                  <h4 class="small font-weight-bold">VPCs <span class="float-right" th:text="${subscriptionUsage.vpc} + '%'">Complete!</span></h4>
+            -->      <h4 class="small font-weight-bold">VPCs <span class="float-right" th:text="${subscriptionUsage.vpc} + '%'">Complete!</span></h4>
                   <div class="progress mb-4">
                     <div th:classappend="${subscriptionUsage.vpcClass}" role="progressbar" th:style="${'width:' + subscriptionUsage.vpc + '%'}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
@@ -294,6 +343,42 @@
                 <div class="card-body">
                   <div class="chart-bar">
                     <canvas id="myBarChart"></canvas>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row">
+
+            <!-- Content Column -->
+
+            <div class="col-lg-6 mb-4">
+                <!-- Bar Chart -->
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Top API Calls Last Month (Sandbox)</h6>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-bar">
+                      <canvas id="myBarChartApiIdSandbox"></canvas>
+                    </div>
+                  </div>
+                </div>
+  
+              </div>
+           
+
+            <div class="col-lg-6 mb-4">
+              <!-- Bar Chart -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Top API Clients Last Month (Sandbox)</h6>
+                </div>
+                <div class="card-body">
+                  <div class="chart-bar">
+                    <canvas id="myBarChartClientIdSandbox"></canvas>
                   </div>
                 </div>
               </div>
@@ -364,7 +449,8 @@
   <script src="js/demo/chart-area-demo.js"></script>
   <script src="js/demo/chart-pie-demo.js"></script>-->
   <script type="text/javascript" src="js/chart-bar-demo.js"></script>
-  
+  <script type="text/javascript" src="js/chart-bar-client-id-sandbox.js"></script>
+  <script type="text/javascript" src="js/chart-bar-api-id-sandbox.js"></script>
   <script src="vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 

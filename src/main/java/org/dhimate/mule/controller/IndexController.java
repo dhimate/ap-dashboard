@@ -1,7 +1,14 @@
 package org.dhimate.mule.controller;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.dhimate.mule.apianalytics.AnypointAPIAnalyticsAPIIdEntity;
+import org.dhimate.mule.apianalytics.AnypointAPIAnalyticsAPIIdRepository;
+import org.dhimate.mule.apimanager.AnypointAPIManagerRepository;
+import org.dhimate.mule.clientapplication.AnypointClientApplicationRepository;
+import org.dhimate.mule.cloudhub.AnypointCloudhubRepository;
 import org.dhimate.mule.cs.AnypointCoreServicesSubscriptionEntity;
 import org.dhimate.mule.cs.AnypointCoreServicesSubscriptionRepository;
 import org.dhimate.mule.cs.AnypointCoreServicesUsageEntity;
@@ -41,7 +48,19 @@ public class IndexController {
 	AnypointCoreServicesSubscriptionRepository subsrepository;
 
 	@Autowired
-	AnypointCoreServicesUsageRepository usagerepository;
+    AnypointCoreServicesUsageRepository usagerepository;
+    
+    @Autowired
+	AnypointCloudhubRepository cloudhubrepository;
+	
+	@Autowired
+	AnypointAPIManagerRepository apimanagerrepository;
+	
+	@Autowired
+    AnypointClientApplicationRepository clientapplicationrepository;
+    
+    @Autowired
+    AnypointAPIAnalyticsAPIIdRepository apiidanalyticsrepository;
 
 	@RequestMapping("/")
 	public String index(Model model) {
@@ -54,14 +73,27 @@ public class IndexController {
 		model.addAttribute("organizationName", aorgrepository.findAll().get(0).getOrganizationName());
 		model.addAttribute("totalOrganizations",aorgrepository.findAll().get(0).getTotalSubOrganizations());
 		model.addAttribute("exchange", exchange);
-		model.addAttribute("designCenter", designCenter);
+        model.addAttribute("designCenter", designCenter);
 
 		AnypointCoreServicesUsageEntity usage = usagerepository.getOne((long) 1);
 		AnypointCoreServicesSubscriptionEntity subscription = subsrepository.getOne((long) 1);
 
 		SubscriptionUsage subscriptionUsage = new SubscriptionUsage(usage, subscription);
 
-		model.addAttribute("subscriptionUsage", subscriptionUsage);
+        model.addAttribute("subscriptionUsage", subscriptionUsage);
+        
+        int totalApplications =cloudhubrepository.findAll().stream().filter(p->p.getEnvironmentName().equals("Sandbox")).collect(Collectors.toList()).size(); 
+        int totalAPIs = apimanagerrepository.findAll().stream().filter(p->p.getEnvironmentName().equals("Sandbox")).collect(Collectors.toList()).size();
+        int totalAPIConsumers = clientapplicationrepository.findAll().stream().collect(Collectors.toList()).size();
+        model.addAttribute("totalApplications", totalApplications);
+        model.addAttribute("totalAPIs", totalAPIs);
+        model.addAttribute("totalAPIConsumers", totalAPIConsumers);
+
+        List<Integer> i= apiidanalyticsrepository.findAll().stream().filter(p->p.getEnvironmentName().equals("Sandbox")).map(p->p.getCount()).collect(Collectors.toList());
+
+        Optional<Integer> totalCount = i.stream().collect(Collectors.reducing((p,q)->p+q));
+        model.addAttribute("totalAPITransactions", totalCount.get());
+
 
 //		log.info(subscriptionUsage.toString());
 
