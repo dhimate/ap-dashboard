@@ -2,8 +2,6 @@ package org.dhimate.mule.controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.dhimate.mule.apianalytics.AnypointAPIAnalyticsAPIIdEntity;
 import org.dhimate.mule.apianalytics.AnypointAPIAnalyticsAPIIdRepository;
 import org.dhimate.mule.apianalytics.AnypointAPIAnalyticsClientIdEntity;
@@ -33,7 +31,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
