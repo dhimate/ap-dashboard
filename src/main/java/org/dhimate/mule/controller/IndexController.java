@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.dhimate.mule.apianalytics.AnypointAPIAnalyticsAPIIdEntity;
 import org.dhimate.mule.apianalytics.AnypointAPIAnalyticsAPIIdRepository;
 import org.dhimate.mule.apimanager.AnypointAPIManagerRepository;
 import org.dhimate.mule.clientapplication.AnypointClientApplicationRepository;
