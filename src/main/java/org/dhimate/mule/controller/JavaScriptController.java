@@ -38,16 +38,14 @@ public class JavaScriptController {
         List<String> users = new ArrayList<String>();
         List<Long> count = new ArrayList<Long>();
 
-      
-
         for (AnypointExchangeAssetsByUser temp : assetsByUser) {
             users.add(temp.getCreatedByName());
             count.add(temp.getCount());
         }
 
-        OptionalLong countWrapper = count.stream().mapToLong(v->v).max();
+        OptionalLong countWrapper = count.stream().mapToLong(v -> v).max();
 
-        Long maxCount = ((Number)Double.parseDouble(Math.ceil(countWrapper.getAsLong() / 20.0)+ "")).longValue() * 20;
+        Long maxCount = ((Number) Double.parseDouble(Math.ceil(countWrapper.getAsLong() / 20.0) + "")).longValue() * 20;
 
         model.addAttribute("exchangeAssetsByUser", users.toArray());
         model.addAttribute("exchangeAssetsCount", count.toArray());
@@ -70,10 +68,12 @@ public class JavaScriptController {
             apiIdCount.add(((Number) temp.getCount()).longValue());
         }
 
-        OptionalLong maxAPICallsWrapper = apiIdCount.stream().mapToLong(v->v).max();
+        OptionalLong maxAPICallsWrapper = apiIdCount.stream().mapToLong(v -> v).max();
 
-        Long maxAPICalls = ((Number)Double.parseDouble(Math.ceil(maxAPICallsWrapper.getAsLong() / 100.0)+ "")).longValue() * 100;
-        
+        Long maxAPICalls = new Long("0");
+        if (maxAPICallsWrapper.isPresent()) {
+            maxAPICalls = ((Number) Double.parseDouble(Math.ceil(maxAPICallsWrapper.getAsLong() / 2000.0) + "")).longValue() * 2000;
+        }
 
         model.addAttribute("maxAPICalls", maxAPICalls);
         model.addAttribute("apiIdName", apiId.toArray());
@@ -96,11 +96,12 @@ public class JavaScriptController {
             clientIdCount.add(((Number) temp.getCount()).longValue());
         }
 
-        OptionalLong maxAPICallsWrapper = clientIdCount.stream().mapToLong(v->v).max();
-        
+        OptionalLong maxAPICallsWrapper = clientIdCount.stream().mapToLong(v -> v).max();
 
-        Long maxAPICalls = ((Number)Double.parseDouble(Math.ceil(maxAPICallsWrapper.getAsLong() / 100.0)+ "")).longValue() * 100;
-
+        Long maxAPICalls = new Long("0");
+        if (maxAPICallsWrapper.isPresent()) {
+            maxAPICalls = ((Number) Double.parseDouble(Math.ceil(maxAPICallsWrapper.getAsLong() / 2000.0) + "")).longValue() * 2000;
+        }
 
         model.addAttribute("maxAPICalls", maxAPICalls);
         model.addAttribute("clientIdName", clientId.toArray());

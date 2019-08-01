@@ -16,21 +16,21 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DesignCenterController {
 
-	@Autowired
-	AnypointOrganizationRepository aorgrepository;
+    @Autowired
+    AnypointOrganizationRepository aorgrepository;
 
-	@Autowired
-	AnypointDesignCenterRepository adcrepository;
+    @Autowired
+    AnypointDesignCenterRepository adcrepository;
 
-	@RequestMapping("/designCenter")
-	public String index(Model model) {
-		log.info("Landing on design center page");
+    @RequestMapping("/designCenter")
+    public String index(Model model) {
+        log.info("Landing on design center page");
 
-		List<AnypointDesignCenterEntity> designCenter = adcrepository.findAll();
-		model.addAttribute("organizationName", aorgrepository.findAll().get(0).getOrganizationName());
+        List<AnypointDesignCenterEntity> designCenter = adcrepository.findAll();
+        model.addAttribute("organizationName", aorgrepository.findAll().get(0).getOrganizationName());
 
-		model.addAttribute("designCenter", designCenter);
+        model.addAttribute("designCenter", designCenter);
 
-		return "designCenter";
-	}
+        return "designCenter";
+    }
 }

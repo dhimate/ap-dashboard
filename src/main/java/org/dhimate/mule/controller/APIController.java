@@ -40,113 +40,113 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class APIController {
 
-	@Autowired
-	AnypointOrganizationRepository orgrepository;
+    @Autowired
+    AnypointOrganizationRepository orgrepository;
 
-	@Autowired
-	AnypointUserRepository userrepository;
+    @Autowired
+    AnypointUserRepository userrepository;
 
-	@Autowired
-	AnypointExchangeRepository exchrepository;
+    @Autowired
+    AnypointExchangeRepository exchrepository;
 
-	@Autowired
-	AnypointDesignCenterRepository dcrepository;
+    @Autowired
+    AnypointDesignCenterRepository dcrepository;
 
-	@Autowired
-	AnypointCoreServicesSubscriptionRepository subsrepository;
+    @Autowired
+    AnypointCoreServicesSubscriptionRepository subsrepository;
 
-	@Autowired
-	AnypointCoreServicesUsageRepository usagerepository;
+    @Autowired
+    AnypointCoreServicesUsageRepository usagerepository;
 
-	@Autowired
-	AnypointEnvironmentRepository environmentrepository;
+    @Autowired
+    AnypointEnvironmentRepository environmentrepository;
 
-	@Autowired
-	AnypointCloudhubRepository cloudhubrepository;
-	
-	@Autowired
-	AnypointAPIManagerRepository apimanagerrepository;
-	
-	@Autowired
+    @Autowired
+    AnypointCloudhubRepository cloudhubrepository;
+
+    @Autowired
+    AnypointAPIManagerRepository apimanagerrepository;
+
+    @Autowired
     AnypointClientApplicationRepository clientapplicationrepository;
-    
+
     @Autowired
     AnypointAPIAnalyticsAPIIdRepository apiidanalyticsrepository;
 
     @Autowired
     AnypointAPIAnalyticsClientIdRepository clientidanalyticsrepository;
 
-	@GetMapping("/users")
-	@ResponseBody
-	List<AnypointUserEntity> users() {
+    @GetMapping("/users")
+    @ResponseBody
+    List<AnypointUserEntity> users() {
 
-		return userrepository.findAll();
-	}
+        return userrepository.findAll();
+    }
 
-	@GetMapping("/organizations")
-	@ResponseBody
-	List<AnypointOrganizationEntity> organizations() {
+    @GetMapping("/organizations")
+    @ResponseBody
+    List<AnypointOrganizationEntity> organizations() {
 
-		return orgrepository.findAll();
-	}
+        return orgrepository.findAll();
+    }
 
-	@GetMapping("/exchange")
-	@ResponseBody
-	List<AnypointExchangeEntity> exchange() {
+    @GetMapping("/exchange")
+    @ResponseBody
+    List<AnypointExchangeEntity> exchange() {
 
-		return exchrepository.findAll();
-	}
+        return exchrepository.findAll();
+    }
 
-	@GetMapping("/design-center")
-	@ResponseBody
-	List<AnypointDesignCenterEntity> designCenter() {
+    @GetMapping("/design-center")
+    @ResponseBody
+    List<AnypointDesignCenterEntity> designCenter() {
 
-		return dcrepository.findAll();
-	}
+        return dcrepository.findAll();
+    }
 
-	@GetMapping("/subscription")
-	@ResponseBody
-	List<AnypointCoreServicesSubscriptionEntity> subscription() {
+    @GetMapping("/subscription")
+    @ResponseBody
+    List<AnypointCoreServicesSubscriptionEntity> subscription() {
 
-		return subsrepository.findAll();
-	}
+        return subsrepository.findAll();
+    }
 
-	@GetMapping("/usage")
-	@ResponseBody
-	List<AnypointCoreServicesUsageEntity> usage() {
+    @GetMapping("/usage")
+    @ResponseBody
+    List<AnypointCoreServicesUsageEntity> usage() {
 
-		return usagerepository.findAll();
-	}
+        return usagerepository.findAll();
+    }
 
-	@GetMapping("/environment")
-	@ResponseBody
-	List<AnypointEnvironmentEntity> environment() {
+    @GetMapping("/environment")
+    @ResponseBody
+    List<AnypointEnvironmentEntity> environment() {
 
-		return environmentrepository.findAll();
-	}
+        return environmentrepository.findAll();
+    }
 
-	@GetMapping("/cloudhub")
-	@ResponseBody
-	List<AnypointCloudhubEntity> cloudhub() {
-		return cloudhubrepository.findAll();
-	}
-	
-	@GetMapping("/apimanager")
-	@ResponseBody
-	List<AnypointAPIManagerEntity> apimanager() {
-		return apimanagerrepository.findAll();
-	}
-	
-	@GetMapping("/clientapplication")
-	@ResponseBody
-	List<AnypointClientApplicationEntity> clientapplication() {
-		return clientapplicationrepository.findAll();
+    @GetMapping("/cloudhub")
+    @ResponseBody
+    List<AnypointCloudhubEntity> cloudhub() {
+        return cloudhubrepository.findAll();
+    }
+
+    @GetMapping("/apimanager")
+    @ResponseBody
+    List<AnypointAPIManagerEntity> apimanager() {
+        return apimanagerrepository.findAll();
+    }
+
+    @GetMapping("/clientapplication")
+    @ResponseBody
+    List<AnypointClientApplicationEntity> clientapplication() {
+        return clientapplicationrepository.findAll();
         //return clientapplicationrepository.findByClientApplicationId("67fe6a0c9ced48849561060a65e64275");
     }
-    
+
     @GetMapping("/apiidanalytics")
     @ResponseBody
-    List<AnypointAPIAnalyticsAPIIdEntity> apianalyticsapiid(){
+    List<AnypointAPIAnalyticsAPIIdEntity> apianalyticsapiid() {
         return apiidanalyticsrepository.findAll();
     }
 
@@ -154,14 +154,14 @@ public class APIController {
     @ResponseBody
     List<AnypointAPIAnalyticsAPIIdEntity> apianalyticsapiidbyenvironment(@PathVariable("environment") String environment) {
         log.info("Total records in repository API ID " + apiidanalyticsrepository.count());
-        List<AnypointAPIAnalyticsAPIIdEntity> i= apiidanalyticsrepository.findAll(); 
+        List<AnypointAPIAnalyticsAPIIdEntity> i = apiidanalyticsrepository.findAll();
         log.info("Total records fetched " + i.size());
-        return i.stream().filter(p->p.getEnvironmentName().equals(environment)).collect(Collectors.toList());
+        return i.stream().filter(p -> p.getEnvironmentName().equals(environment)).collect(Collectors.toList());
     }
 
     @GetMapping("/clientidanalytics")
     @ResponseBody
-    List<AnypointAPIAnalyticsClientIdEntity> apianalyticsclientid(){
+    List<AnypointAPIAnalyticsClientIdEntity> apianalyticsclientid() {
         return clientidanalyticsrepository.findAll();
     }
 
@@ -169,8 +169,8 @@ public class APIController {
     @ResponseBody
     List<AnypointAPIAnalyticsClientIdEntity> apianalyticsclientidbyenvironment(@PathVariable("environment") String environment) {
         log.info("Total records in repository API ID " + clientidanalyticsrepository.count());
-        List<AnypointAPIAnalyticsClientIdEntity> i= clientidanalyticsrepository.findAll(); 
+        List<AnypointAPIAnalyticsClientIdEntity> i = clientidanalyticsrepository.findAll();
         log.info("Total records fetched " + i.size());
-        return i.stream().filter(p->p.getEnvironmentName().equals(environment)).collect(Collectors.toList());
+        return i.stream().filter(p -> p.getEnvironmentName().equals(environment)).collect(Collectors.toList());
     }
 }

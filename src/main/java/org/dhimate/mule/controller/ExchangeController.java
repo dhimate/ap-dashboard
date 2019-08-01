@@ -16,26 +16,24 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ExchangeController {
 
-	@Autowired
-	AnypointOrganizationRepository aorgrepository;
+    @Autowired
+    AnypointOrganizationRepository aorgrepository;
 
+    @Autowired
+    AnypointExchangeRepository aexcrepository;
 
+    @RequestMapping("/exchange")
+    public String index(Model model) {
+        log.info("Landing on design center page");
 
-	@Autowired
-	AnypointExchangeRepository aexcrepository;
+        List<AnypointExchangeEntity> exchange = aexcrepository.findAll();
 
-	@RequestMapping("/exchange")
-	public String index(Model model) {
-		log.info("Landing on design center page");
+        log.info(exchange.toString());
 
-		List<AnypointExchangeEntity> exchange = aexcrepository.findAll();
-		
-		log.info(exchange.toString());
-		
-		model.addAttribute("organizationName", aorgrepository.findAll().get(0).getOrganizationName());
+        model.addAttribute("organizationName", aorgrepository.findAll().get(0).getOrganizationName());
 
-		model.addAttribute("exchange", exchange);
+        model.addAttribute("exchange", exchange);
 
-		return "exchange";
-	}
+        return "exchange";
+    }
 }
